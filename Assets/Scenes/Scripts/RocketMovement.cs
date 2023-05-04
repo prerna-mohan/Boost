@@ -13,25 +13,25 @@ public class RocketMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        upwardThrust()
-        rotate()
+        ProcessThrust();
+        ProcessRotate();
     }
 
-    void upwardThrust(){
+    void ProcessThrust(){
         if (Input.GetKey(KeyCode.Space))
         {
-            debug.info("space is pressed")
+            Debug.Log("space is pressed");
         }
     }
 
-    void rotate(){
+    void ProcessRotate(){
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            debug.info("going left")
+            Debug.Log("going left");
         }
         else if(Input.GetKey(KeyCode.RightArrow))
         {
-            debug.info("going right")
+            Debug.Log("going right");
         }
     }
 }
