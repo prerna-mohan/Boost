@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class RocketMovement : MonoBehaviour
 {
-    // Start is called before the first frame update
+    Rigidbody rb;
+    [SerializeField] float upThrust = 1300f;
+    [SerializeField] float rotateThrust = 100f;
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -20,18 +22,30 @@ public class RocketMovement : MonoBehaviour
     void ProcessThrust(){
         if (Input.GetKey(KeyCode.Space))
         {
-            Debug.Log("space is pressed");
+            rb.AddRelativeForce(Vector3.up * upThrust * Time.deltaTime);
         }
     }
 
     void ProcessRotate(){
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            Debug.Log("going left");
+            transform.Rotate(Vector3.forward * rotateThrust * Time.deltaTime);
         }
         else if(Input.GetKey(KeyCode.RightArrow))
         {
-            Debug.Log("going right");
+            transform.Rotate(-Vector3.forward * rotateThrust * Time.deltaTime);
         }
+    }
+
+    void OnCollisionEnter(Collision collision){
+        rb.freezeRotation = false;
+        if(collision.gameObject.layer == 6){
+            Invoke("Respawn",2);
+            GetComponent<RocketMovement>().enabled = false;
+        }
+    }
+
+    void Respawn(){
+        
     }
 }
